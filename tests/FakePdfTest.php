@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\PdfBuilder;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\PdfBuilder;
 
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 beforeEach(function () {
     Pdf::fake();

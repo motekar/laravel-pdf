@@ -1,6 +1,6 @@
 <?php
 
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 beforeEach(function () {
     $this->targetPath = getTempPath('test.pdf');

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 Route::get('pdf/{method}', function ($method) {
     return pdf('test')->{$method}('my-custom-name');

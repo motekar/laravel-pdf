@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\LaravelPdf\Tests;
+namespace Motekar\LaravelPdf\Tests;
 
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;

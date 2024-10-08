@@ -1,7 +1,7 @@
 <?php
 
 use Spatie\Image\Image;
-use Spatie\LaravelPdf\Tests\TestCase;
+use Motekar\LaravelPdf\Tests\TestCase;
 use Spatie\PdfToText\Pdf;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 

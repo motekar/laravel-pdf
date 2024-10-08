@@ -10,7 +10,7 @@ There are various options to customize the output of the PDFs. You can change th
 You can set a header and footer on every page of the PDF. You can use the `headerView` and `footerView` methods to set the HTML for the header and footer.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->headerView('pdf.invoice.header')
@@ -21,7 +21,7 @@ Pdf::view('pdf.invoice', ['invoice' => $invoice])
 You can also use the `headerHtml` and `footerHtml` methods to set the HTML for the header and footer.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->headerHtml('<div>My header</div>')
@@ -68,7 +68,7 @@ It supports absolute and relative paths
 By default, all PDFs are created in portrait mode. You can change this by calling the `landscape` method.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->landscape()
@@ -78,8 +78,8 @@ Pdf::view('pdf.invoice', ['invoice' => $invoice])
 Alternatively, you can use the `Orientation` method.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use \Spatie\LaravelPdf\Enums\Orientation;
+use Motekar\LaravelPdf\Facades\Pdf;
+use \Motekar\LaravelPdf\Enums\Orientation;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->orientation(Orientation::Landscape)
@@ -91,8 +91,8 @@ Pdf::view('pdf.invoice', ['invoice' => $invoice])
 By default, all PDFs are created in Letter format. You can change this by calling the `format` method.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\Enums\Format;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Enums\Format;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->format(Format::A3) // or you can pass a string like 'a3'
@@ -120,7 +120,7 @@ A6: 4.13in  x  5.83in
 If you don't want to use standardized formats, you can also use the `paperSize` method instead.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('pdf.receipt', ['order' => $order])
     ->paperSize(57, 500, 'mm')
@@ -132,7 +132,7 @@ Pdf::view('pdf.receipt', ['order' => $order])
 Margins can be set using the `margins` method. The unit of the margins is millimeters by default.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->margins($top, $right, $bottom, $left)
@@ -143,8 +143,8 @@ Optionally you can give a custom unit to the `margins` as the fifth parameter.
 
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\Enums\Unit;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Enums\Unit;
 
 Pdf::view('pdf.invoice', ['invoice' => $invoice])
     ->margins($top, $right, $bottom, $left, Unit::Pixel)

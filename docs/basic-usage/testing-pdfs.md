@@ -8,7 +8,7 @@ In your test, you can call the `fake()` method on the `Pdf` facade to fake the P
 ```php
 // in your test
 
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 beforeEach(function () {
     Pdf::fake();
@@ -17,11 +17,11 @@ beforeEach(function () {
 
 ## assertSaved
 
-You can use the `assertSaved` method to assert that a PDF was saved with specific properties. You should pass it a callable which will received an instance of `Spatie\LaravelPdf\PdfBuilder`. If the callable returns `true`, the assertion will pass.
+You can use the `assertSaved` method to assert that a PDF was saved with specific properties. You should pass it a callable which will received an instance of `Motekar\LaravelPdf\PdfBuilder`. If the callable returns `true`, the assertion will pass.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\PdfBuilder;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\PdfBuilder;
 
 Pdf::assertSaved(function (PdfBuilder $pdf) {
     return $pdf->downloadName === 'invoice.pdf'
@@ -32,8 +32,8 @@ Pdf::assertSaved(function (PdfBuilder $pdf) {
 If you want to assert that a PDF was saved to a specific path, you accept the path as a second parameter of the callable.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\PdfBuilder;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\PdfBuilder;
 
 Pdf::assertSaved(function (PdfBuilder $pdf, string $path) {
     return $path === storage_path('invoices/invoice.pdf');
@@ -47,7 +47,7 @@ The `assertRespondedWithPdf` method can be used to assert that a PDF was generat
 Imagine you have this route:
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Route::get('download-invoice', function () {
     return pdf('pdf.invoice')->download('invoice-for-april-2022.pdf');
@@ -57,8 +57,8 @@ Route::get('download-invoice', function () {
 In your test for this route you can use the `assertRespondedWithPdf` to make sure that a PDF was generated and returned as a download. You can even make assertions on the content of the PDF.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\PdfBuilder;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\PdfBuilder;
 
 it('can download an invoice', function () {
     $this

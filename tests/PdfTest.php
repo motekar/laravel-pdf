@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
-use Spatie\LaravelPdf\Enums\Format;
-use Spatie\LaravelPdf\Enums\Orientation;
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Enums\Format;
+use Motekar\LaravelPdf\Enums\Orientation;
+use Motekar\LaravelPdf\Facades\Pdf;
 
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 beforeEach(function () {
     $this->targetPath = getTempPath('test.pdf');

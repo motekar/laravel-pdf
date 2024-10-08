@@ -1,7 +1,7 @@
 <?php
 
-use Spatie\LaravelPdf\Enums\Orientation;
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Enums\Orientation;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 it('can set defaults for pdfs', function () {
     Pdf::default()->orientation(Orientation::Landscape);

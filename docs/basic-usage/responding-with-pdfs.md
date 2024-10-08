@@ -6,7 +6,7 @@ weight: 2
 In a controller, you can create and return a PDF by using the `pdf()` helper function.
 
 ```php
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 class DownloadInvoiceController
 {
@@ -26,7 +26,7 @@ you always name your PDFs.
 If you want to force the PDF to be downloaded, you can use the `download()` method.
 
 ```php
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 class DownloadInvoiceController
 {

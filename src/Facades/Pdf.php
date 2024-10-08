@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\LaravelPdf\Facades;
+namespace Motekar\LaravelPdf\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Spatie\LaravelPdf\FakePdfBuilder;
-use Spatie\LaravelPdf\PdfFactory;
+use Motekar\LaravelPdf\FakePdfBuilder;
+use Motekar\LaravelPdf\PdfFactory;
 
 /**
- * @mixin \Spatie\LaravelPdf\PdfBuilder
- * @mixin \Spatie\LaravelPdf\FakePdfBuilder
+ * @mixin \Motekar\LaravelPdf\PdfBuilder
+ * @mixin \Motekar\LaravelPdf\FakePdfBuilder
  */
 class Pdf extends Facade
 {

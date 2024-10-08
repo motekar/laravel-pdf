@@ -8,8 +8,8 @@ You can set the default options for every PDF, by using the `default` method on 
 Typically, you would do this in the `boot` method of a service provider.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\Enums\Format;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Enums\Format;
 
 // in a service provider
 

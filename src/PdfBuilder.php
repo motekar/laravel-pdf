@@ -1,15 +1,15 @@
 <?php
 
-namespace Spatie\LaravelPdf;
+namespace Motekar\LaravelPdf;
 
 use Closure;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
-use Spatie\LaravelPdf\Enums\Format;
-use Spatie\LaravelPdf\Enums\Orientation;
-use Spatie\LaravelPdf\Enums\Unit;
+use Motekar\LaravelPdf\Enums\Format;
+use Motekar\LaravelPdf\Enums\Orientation;
+use Motekar\LaravelPdf\Enums\Unit;
 use Wnx\SidecarBrowsershot\BrowsershotLambda;
 
 class PdfBuilder implements Responsable

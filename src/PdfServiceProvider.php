@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\LaravelPdf;
+namespace Motekar\LaravelPdf;
 
 use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;

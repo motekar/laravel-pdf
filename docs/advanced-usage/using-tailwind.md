@@ -92,7 +92,7 @@ In your app, you can add a controller like this. The above view is saved in `res
 ```php
 namespace App\Http\Controllers;
 
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 class DownloadInvoiceController
 {

@@ -11,7 +11,7 @@ You can customize the Browsershot instance by calling the `withBrowsershot` meth
 Here's an example of how you can call Browsershot's `scale` method.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('test')
     ->withBrowsershot(function (Browsershot $browsershot) {

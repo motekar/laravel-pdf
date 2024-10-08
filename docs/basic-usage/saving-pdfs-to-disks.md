@@ -10,7 +10,7 @@ Laravel PDF can save PDFs to any disk you have configured in your application. T
 Here's an example of saving a PDF to the `s3` disk.
 
 ```php
-use Spatie\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\Facades\Pdf;
 
 Pdf::view('invoice')
    ->disk('s3')

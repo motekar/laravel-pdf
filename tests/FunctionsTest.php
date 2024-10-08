@@ -1,10 +1,10 @@
 <?php
 
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\FakePdfBuilder;
-use Spatie\LaravelPdf\PdfBuilder;
+use Motekar\LaravelPdf\Facades\Pdf;
+use Motekar\LaravelPdf\FakePdfBuilder;
+use Motekar\LaravelPdf\PdfBuilder;
 
-use function Spatie\LaravelPdf\Support\pdf;
+use function Motekar\LaravelPdf\Support\pdf;
 
 test('the `pdf` function returns the pdf builder instance', function () {
     expect(pdf())->toBeInstanceOf(PdfBuilder::class);

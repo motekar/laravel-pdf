@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\LaravelPdf;
+namespace Motekar\LaravelPdf;
 
 use Closure;
 use Illuminate\Http\Response;
