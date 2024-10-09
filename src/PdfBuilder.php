@@ -296,8 +296,10 @@ class PdfBuilder implements Responsable
     {
         $tempPath = tempnam(sys_get_temp_dir(), Str::random());
 
-        $factory = new BrowserFactory;
-        $browser = $factory->createBrowser();
+        $factory = new BrowserFactory();
+        $browser = $factory->createBrowser([
+            'noSandbox' => true,
+        ]);
 
         try {
             $page = $browser->createPage();
