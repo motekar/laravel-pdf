@@ -7,6 +7,8 @@
 
 This package provides a simple way to create PDFs in Laravel apps. Under the hood it uses [Chromium](https://www.chromium.org/chromium-projects/) to generate PDFs from Blade views. You can use modern CSS features like grid and flexbox to create beautiful PDFs.
 
+_Unlike [spatie/laravel-pdf](https://github.com/spatie/laravel-pdf) this package does not require **nodejs** and **puppeteer**, it uses [chrome-php/chrome](https://github.com/chrome-php/chrome) instead._
+
 Here's a quick example:
 
 ```php
@@ -54,23 +56,25 @@ it('can render an invoice', function () {
 });
 ```
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-pdf.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-pdf)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
 ## Documentation
 
-All documentation is available [on our documentation site](https://spatie.be/docs/laravel-pdf).
+### Installation
+
+You can install the package via composer:
+
+```bash
+composer require motekar/laravel-pdf
+```
+
+Under the hood this package uses [Google Chrome](https://www.google.com/chrome/) or [Chromium](https://www.chromium.org/chromium-projects/) to generate PDFs. You'll need to install any of these browsers on your system.
+
+### Usage
+
+This package supports almost every feature of Spatie's Laravel PDF package. For detailed usage documentation, we recommend referring to the comprehensive guide available on [Spatie's documentation site](https://spatie.be/docs/laravel-pdf). The usage patterns and methods are largely compatible, allowing you to leverage the extensive documentation provided by Spatie for this package as well.
 
 ## Testing
 
-For running the testsuite, you'll need to have Puppeteer installed. Pleaser refer to the Browsershot requirements [here](https://spatie.be/docs/browsershot/v4/requirements). Usually `npm -g i puppeteer` will do the trick.
-
-Additionally, you'll need the `pdftotext` CLI which is part of the poppler-utils package. More info can be found in in the [spatie/pdf-to-text readme](https://github.com/spatie/pdf-to-text?tab=readme-ov-file#requirements). Usually `brew install poppler-utils` will suffice.
+For running the testsuite, you'll need the `pdftotext` CLI which is part of the poppler-utils package. More info can be found in in the [spatie/pdf-to-text readme](https://github.com/spatie/pdf-to-text?tab=readme-ov-file#requirements). Usually `brew install poppler` will suffice.
 
 Finally run the tests with:
 
@@ -92,6 +96,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
+- [Fauzie Rofi](https://github.com/fauzie811)
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
 
