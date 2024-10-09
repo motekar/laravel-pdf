@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
-use Spatie\Browsershot\Browsershot;
 use Motekar\LaravelPdf\Enums\Format;
 use Motekar\LaravelPdf\Enums\Orientation;
 use Motekar\LaravelPdf\Facades\Pdf;
@@ -119,18 +118,6 @@ it('can accept the page size', function () {
 it('can accept the orientation', function () {
     Pdf::view('test')
         ->orientation(Orientation::Landscape)
-        ->save($this->targetPath);
-
-    expect($this->targetPath)
-        ->toHaveDimensions(792, 612)
-        ->toContainText('This is a test');
-});
-
-it('can customize browsershot', function () {
-    Pdf::view('test')
-        ->withBrowsershot(function (Browsershot $browsershot) {
-            $browsershot->landscape();
-        })
         ->save($this->targetPath);
 
     expect($this->targetPath)

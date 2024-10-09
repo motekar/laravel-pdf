@@ -1,7 +1,7 @@
 <?php
 
-use Spatie\Image\Image;
 use Motekar\LaravelPdf\Tests\TestCase;
+use Spatie\Image\Image;
 use Spatie\PdfToText\Pdf;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 
@@ -57,7 +57,7 @@ expect()->extend('toBeWithinRange', function (int $min, int $max) {
 expect()->extend('toContainText', function (string|array $expectedText) {
     $binPath = PHP_OS === 'Linux'
         ? '/usr/bin/pdftotext'
-        : '/opt/homebrew/bin/pdftotext';
+        : '/usr/local/bin/pdftotext';
 
     $path = $this->value;
 
@@ -80,7 +80,7 @@ expect()->extend('toContainText', function (string|array $expectedText) {
 });
 
 expect()->extend('toHavePageCount', function (int $expectedNumberOfPages) {
-    $image = new Imagick();
+    $image = new Imagick;
     $image->pingImage($this->value);
 
     expect($image->getNumberImages())->toBe($expectedNumberOfPages);

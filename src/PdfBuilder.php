@@ -2,18 +2,22 @@
 
 namespace Motekar\LaravelPdf;
 
-use Closure;
+use HeadlessChromium\BrowserFactory;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Browsershot\Browsershot;
+use Illuminate\Support\Str;
 use Motekar\LaravelPdf\Enums\Format;
 use Motekar\LaravelPdf\Enums\Orientation;
 use Motekar\LaravelPdf\Enums\Unit;
-use Wnx\SidecarBrowsershot\BrowsershotLambda;
+
+use function Motekar\LaravelPdf\Support\toInch;
 
 class PdfBuilder implements Responsable
 {
+    const TIMEOUT = 60 * 1000;
+
     public string $viewName = '';
 
     public array $viewData = [];
@@ -34,8 +38,6 @@ class PdfBuilder implements Responsable
 
     public string $downloadName = '';
 
-    public ?string $format = null;
-
     public ?array $paperSize = null;
 
     public ?string $orientation = null;
@@ -43,8 +45,6 @@ class PdfBuilder implements Responsable
     public ?array $margins = null;
 
     protected string $visibility = 'private';
-
-    protected ?Closure $customizeBrowsershot = null;
 
     protected array $responseHeaders = [
         'Content-Type' => 'application/pdf',
@@ -168,8 +168,7 @@ class PdfBuilder implements Responsable
     public function base64(): string
     {
         return $this
-            ->getBrowsershot()
-            ->base64pdf();
+            ->generatePdf(true);
     }
 
     public function margins(
@@ -194,13 +193,9 @@ class PdfBuilder implements Responsable
         return $this;
     }
 
-    public function format(string|Format $format): self
+    public function format(Format $format): self
     {
-        if ($format instanceof Format) {
-            $format = $format->value;
-        }
-
-        $this->format = $format;
+        $this->paperSize = $format->toPaperSize();
 
         return $this;
     }
@@ -220,29 +215,13 @@ class PdfBuilder implements Responsable
         return $this;
     }
 
-    public function withBrowsershot(callable $callback): self
-    {
-        $this->customizeBrowsershot = $callback;
-
-        return $this;
-    }
-
-    public function onLambda(): self
-    {
-        $this->onLambda = true;
-
-        return $this;
-    }
-
     public function save(string $path): self
     {
         if ($this->diskName) {
             return $this->saveOnDisk($this->diskName, $path);
         }
 
-        $this
-            ->getBrowsershot()
-            ->save($path);
+        File::put($path, $this->generatePdf());
 
         return $this;
     }
@@ -257,7 +236,7 @@ class PdfBuilder implements Responsable
 
     protected function saveOnDisk(string $diskName, string $path): self
     {
-        $pdfContent = $this->getBrowsershot()->pdf();
+        $pdfContent = $this->generatePdf();
         $visibility = $this->visibility;
 
         Storage::disk($diskName)->put($path, $pdfContent, $visibility);
@@ -313,61 +292,57 @@ class PdfBuilder implements Responsable
         ]);
     }
 
-    public function getBrowsershot(): Browsershot
+    public function generatePdf(bool $base64 = false): string
     {
-        $browsershotClass = $this->onLambda
-            ? BrowsershotLambda::class
-            : Browsershot::class;
+        $tempPath = tempnam(sys_get_temp_dir(), Str::random());
 
-        $browsershot = $browsershotClass::html($this->getHtml());
+        $factory = new BrowserFactory;
+        $browser = $factory->createBrowser();
 
-        $browsershot->showBackground();
+        try {
+            $page = $browser->createPage();
+            $page->setHtml($this->getHtml());
 
-        $headerHtml = $this->getHeaderHtml();
+            $options = [
+                'printBackground' => true,
+                'preferCSSPageSize' => true,
+            ];
 
-        $footerHtml = $this->getFooterHtml();
+            $headerHtml = $this->getHeaderHtml();
 
-        if ($headerHtml || $footerHtml) {
-            $browsershot->showBrowserHeaderAndFooter();
+            $footerHtml = $this->getFooterHtml();
 
-            if (! $headerHtml) {
-                $browsershot->hideHeader();
+            if ($headerHtml || $footerHtml) {
+                $options['displayHeaderFooter'] = true;
+
+                $options['headerTemplate'] = $headerHtml ?? '<p></p>';
+                $options['footerTemplate'] = $footerHtml ?? '<p></p>';
             }
 
-            if (! $footerHtml) {
-                $browsershot->hideFooter();
+            if ($this->margins) {
+                $options['marginTop'] = toInch($this->margins['top'], $this->margins['unit']);
+                $options['marginRight'] = toInch($this->margins['right'], $this->margins['unit']);
+                $options['marginBottom'] = toInch($this->margins['bottom'], $this->margins['unit']);
+                $options['marginLeft'] = toInch($this->margins['left'], $this->margins['unit']);
             }
 
-            if ($headerHtml) {
-                $browsershot->headerHtml($headerHtml);
+            if ($this->paperSize) {
+                $options['paperWidth'] = toInch($this->paperSize['width'], $this->paperSize['unit']);
+                $options['paperHeight'] = toInch($this->paperSize['height'], $this->paperSize['unit']);
             }
 
-            if ($footerHtml) {
-                $browsershot->footerHtml($footerHtml);
+            if ($this->orientation === Orientation::Landscape->value) {
+                $options['landscape'] = true;
             }
+
+            $pdf = $base64
+                ? $page->pdf($options)->getBase64(static::TIMEOUT)
+                : $page->pdf($options)->saveToFile($tempPath, static::TIMEOUT);
+        } finally {
+            $browser->close();
         }
 
-        if ($this->margins) {
-            $browsershot->margins(...$this->margins);
-        }
-
-        if ($this->format) {
-            $browsershot->format($this->format);
-        }
-
-        if ($this->paperSize) {
-            $browsershot->paperSize(...$this->paperSize);
-        }
-
-        if ($this->orientation === Orientation::Landscape->value) {
-            $browsershot->landscape();
-        }
-
-        if ($this->customizeBrowsershot) {
-            ($this->customizeBrowsershot)($browsershot);
-        }
-
-        return $browsershot;
+        return $base64 ? $pdf : File::get($tempPath);
     }
 
     public function toResponse($request): Response
@@ -376,7 +351,7 @@ class PdfBuilder implements Responsable
             $this->inline($this->downloadName);
         }
 
-        $pdfContent = $this->getBrowsershot()->pdf();
+        $pdfContent = $this->generatePdf();
 
         return response($pdfContent, 200, $this->responseHeaders);
     }

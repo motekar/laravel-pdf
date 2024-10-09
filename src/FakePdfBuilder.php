@@ -16,7 +16,7 @@ class FakePdfBuilder extends PdfBuilder
 
     public function save(string $path): self
     {
-        $this->getBrowsershot();
+        $this->generatePdf();
 
         $this->savedPdfs[] = [
             'pdf' => clone $this,
@@ -30,7 +30,7 @@ class FakePdfBuilder extends PdfBuilder
     {
         $this->respondedWithPdf[] = clone $this;
 
-        return new Response();
+        return new Response;
     }
 
     public function assertViewIs(string $viewName): void

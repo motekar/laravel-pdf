@@ -13,17 +13,23 @@
       "name": "Freek Van der Herten",
       "email": "freek@spatie.be",
       "role": "Developer"
+    },
+    {
+      "name": "Fauzie Rofi",
+      "email": "fauzie811@yahoo.com",
+      "role": "Developer"
     }
   ],
   "require": {
     "php": "^8.2",
+    "chrome-php/chrome": "^1.11",
     "illuminate/contracts": "^10.0|^11.0",
-    "spatie/browsershot": "^4.0",
     "spatie/laravel-package-tools": "^1.16.1",
     "spatie/temporary-directory": "^2.2.1"
   },
   "require-dev": {
     "ext-imagick": "*",
+    "guzzlehttp/guzzle": "^7.9",
     "larastan/larastan": "^2.7.0",
     "laravel/pint": "^1.13.7",
     "nunomaduro/collision": "^7.10",
@@ -40,8 +46,7 @@
     "spatie/pdf-to-text": "^1.52.1",
     "spatie/pest-expectations": "^1.5",
     "spatie/pest-plugin-snapshots": "^2.1",
-    "spatie/pixelmatch-php": "^1.0",
-    "wnx/sidecar-browsershot": "^2.0"
+    "spatie/pixelmatch-php": "^1.0"
   },
   "autoload": {
     "psr-4": {
