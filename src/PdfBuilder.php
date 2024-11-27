@@ -16,8 +16,6 @@ use function Motekar\LaravelPdf\Support\toInch;
 
 class PdfBuilder implements Responsable
 {
-    const TIMEOUT = 60 * 1000;
-
     public string $viewName = '';
 
     public array $viewData = [];
@@ -296,14 +294,12 @@ class PdfBuilder implements Responsable
     {
         $tempPath = tempnam(sys_get_temp_dir(), Str::random());
 
-        $factory = new BrowserFactory();
-        $browser = $factory->createBrowser([
-            'noSandbox' => true,
-        ]);
+        $factory = new BrowserFactory;
+        $browser = $factory->createBrowser(config('pdf.chrome_options'));
 
         try {
             $page = $browser->createPage();
-            $page->setHtml($this->getHtml());
+            $page->setHtml($this->getHtml(), config('pdf.chrome_timeout'));
 
             $options = [
                 'printBackground' => true,
@@ -338,8 +334,8 @@ class PdfBuilder implements Responsable
             }
 
             $pdf = $base64
-                ? $page->pdf($options)->getBase64(static::TIMEOUT)
-                : $page->pdf($options)->saveToFile($tempPath, static::TIMEOUT);
+                ? $page->pdf($options)->getBase64(config('pdf.chrome_timeout'))
+                : $page->pdf($options)->saveToFile($tempPath, config('pdf.chrome_timeout'));
         } finally {
             $browser->close();
         }
