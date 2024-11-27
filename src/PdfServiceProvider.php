@@ -29,7 +29,7 @@ class PdfServiceProvider extends PackageServiceProvider
             return "<?php echo '<span class=\"totalPages\"></span>'; ?>";
         });
 
-        Blade::directive('inlinedImage', function ($url) {
+        Blade::directive('inlinedImage', function ($url, $classes = '') {
             return "<?php
                 \$url = \Illuminate\Support\Str::of($url)->trim(\"'\")->trim('\"')->value();
 
@@ -51,7 +51,7 @@ class PdfServiceProvider extends PackageServiceProvider
 
                 \$mime = (new finfo(FILEINFO_MIME_TYPE))->buffer(\$content) ?: 'image/png';
 
-                echo '<img src=\"data:'.\$mime.';base64,'.base64_encode(\$content).'\">';
+                echo '<img class=\"$classes\" src=\"data:'.\$mime.';base64,'.base64_encode(\$content).'\">';
             ?>";
         });
     }
