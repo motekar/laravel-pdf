@@ -29,30 +29,8 @@ class PdfServiceProvider extends PackageServiceProvider
             return "<?php echo '<span class=\"totalPages\"></span>'; ?>";
         });
 
-        Blade::directive('inlinedImage', function ($url, $classes = '') {
-            return "<?php
-                \$url = \Illuminate\Support\Str::of($url)->trim(\"'\")->trim('\"')->value();
-
-                if (! \Illuminate\Support\Str::of(\$url)->isUrl()) {
-                    try {
-                        \$content = file_get_contents(\$url);
-                    } catch(\Exception \$exception) {
-                        throw new \Illuminate\View\ViewException('Image not found: ' . \$exception->getMessage());
-                    }
-                } else {
-                    \$response = \Illuminate\Support\Facades\Http::get(\$url);
-
-                    if (! \$response->successful()) {
-                        throw new \Illuminate\View\ViewException('Failed to fetch the image: ' . \$response->toException());
-                    }
-
-                    \$content = \$response->body();
-                }
-
-                \$mime = (new finfo(FILEINFO_MIME_TYPE))->buffer(\$content) ?: 'image/png';
-
-                echo '<img class=\"$classes\" src=\"data:'.\$mime.';base64,'.base64_encode(\$content).'\">';
-            ?>";
+        Blade::directive('inlinedImage', function ($expression) {
+            return "<?php echo \Motekar\LaravelPdf\Support\inlinedImage($expression); ?>";
         });
     }
 }
