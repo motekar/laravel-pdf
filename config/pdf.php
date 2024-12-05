@@ -25,7 +25,6 @@ return [
      * - excludedSwitches: An array of Chrome flags that should be removed from the default set (example --enable-automation)
      */
     'chrome_options' => [
-        'keepAlive' => true,
         'noSandbox' => true,
     ],
     'chrome_timeout' => 60 * 1000,
